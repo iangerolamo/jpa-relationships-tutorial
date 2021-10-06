@@ -1,6 +1,7 @@
 package com.iangerolamo.jparelationshipstutorial.subject;
 
 import com.iangerolamo.jparelationshipstutorial.student.Student;
+import com.iangerolamo.jparelationshipstutorial.teacher.Teacher;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -21,6 +22,10 @@ public class Subject {
 
     )
     private Set<Student> enrolledStudents = new HashSet<>();
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "teacher_id", referencedColumnName = "id")
+    private Teacher teacher;
 
     private String name;
 
@@ -50,5 +55,17 @@ public class Subject {
 
     public void enrollStudent(Student student) {
         enrolledStudents.add(student);
+    }
+
+    public void assignTeacher(Teacher teacher) {
+        this.teacher = teacher;
+    }
+
+    public Teacher getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
     }
 }
